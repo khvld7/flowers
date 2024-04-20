@@ -28,7 +28,7 @@ showCardDialog(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             CustomButton(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               height: 35,
               textColor: Colors.black,
               border: Border.all(
@@ -44,7 +44,7 @@ showCardDialog(
               ),
             ),
             CustomButton(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               height: 35,
               color: Color.fromRGBO(137, 106, 219, 1),
               onPressed: addBasket,

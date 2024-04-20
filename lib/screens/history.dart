@@ -14,21 +14,23 @@ class HistoryScreenState extends State<HistoryScreen> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 18),
-                child: Text(
-                  'История заказов',
-                  style: TextStyle(
-                      fontSize: 40,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'SF-Pro-Display'),
+          title: Padding(
+            padding: EdgeInsets.only(left: 18),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    'История заказов',
+                    style: TextStyle(
+                        fontSize: 40,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'SF-Pro-Display'),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

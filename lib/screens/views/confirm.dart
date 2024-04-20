@@ -55,6 +55,8 @@ class _ConfirmWidgetState extends State<ConfirmWidget> {
         toolbarHeight: 100,
       ),
       body: ListView(
+          physics: BouncingScrollPhysics(),
+          padding: EdgeInsets.only(top: 10, bottom: 50),
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           children: [
             Container(
@@ -121,12 +123,14 @@ class _ConfirmWidgetState extends State<ConfirmWidget> {
                                   : SvgPicture.asset(
                                       'assets/icons/active_icon/check_box_active.svg')),
                         ),
-                        Text(
-                          'Я хочу получать уведомления о скидках и акционных предложениях',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w300,
-                            fontFamily: 'SF-Pro-Display',
+                        Expanded(
+                          child: Text(
+                            'Я хочу получать уведомления о скидках и акционных предложениях',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w300,
+                              fontFamily: 'SF-Pro-Display',
+                            ),
                           ),
                         )
                       ],

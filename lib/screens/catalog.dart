@@ -116,7 +116,7 @@ class CatalogScreenState extends State<CatalogScreen> {
       body: flowersData.isNotEmpty
           ? ListView(
               physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.only(top: 10, bottom: 20),
+              padding: EdgeInsets.only(top: 10, bottom: 50),
               children: [
                 Column(
                   children: [

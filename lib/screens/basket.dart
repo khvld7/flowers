@@ -49,7 +49,7 @@ class _BasketScreenState extends State<BasketScreen> {
                     itemCount: box.length,
                     itemBuilder: (BuildContext context, int index) {
                       final getBox = box.getAt(index);
-                      if (getBox?.isBought == true)
+                      if (getBox?.isBought == true) {
                         return Dismissible(
                           onDismissed: ((direction) {
                             setState(() {
@@ -100,30 +100,35 @@ class _BasketScreenState extends State<BasketScreen> {
                                   horizontal: 20, vertical: 15),
                               child: Column(
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        box.getAt(index)?.name ?? '',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w400,
-                                            fontFamily: 'SF-Pro-Display'),
-                                      ),
-                                      Text(
-                                        toMoney(box.getAt(index)?.price ?? 0) +
-                                            ' руб.',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'SF-Pro-Display'),
-                                      ),
-                                    ],
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            box.getAt(index)?.name ?? '',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400,
+                                                fontFamily: 'SF-Pro-Display'),
+                                          ),
+                                        ),
+                                        Text(
+                                          toMoney(box.getAt(index)?.price ??
+                                                  0) +
+                                              ' руб.',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'SF-Pro-Display'),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -131,6 +136,7 @@ class _BasketScreenState extends State<BasketScreen> {
                           ),
                           key: UniqueKey(),
                         );
+                      }
                       return SizedBox.shrink();
                     })
                 : Center(
