@@ -4,6 +4,7 @@ import 'package:taskflower/adapter/hive_adapter.dart';
 import 'package:taskflower/components/card.dart';
 import 'package:taskflower/database/bouquet.dart';
 import 'package:taskflower/database/database.dart';
+import 'package:taskflower/globals.dart';
 
 class FinishedAll extends StatefulWidget {
   const FinishedAll({super.key});
@@ -96,6 +97,8 @@ class FinishedAllState extends State<FinishedAll> {
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: GridView.builder(
+          physics: BouncingScrollPhysics(),
+          padding: EdgeInsets.only(top: 10, bottom: 20),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisSpacing: 30,
@@ -105,7 +108,21 @@ class FinishedAllState extends State<FinishedAll> {
           itemCount: finishedBouquet.length,
           itemBuilder: (BuildContext context, int index) {
             return CardWidget(
-              onTapCard: () {},
+              onTapCard: () => showCardDialog(
+                  context: context,
+                  flowerData: finishedBouquet[index],
+                  addBasket: () {
+                    setState(() {
+                      finishedBouquet[index].isBought = true;
+                      box.values
+                          .firstWhere((el) =>
+                              el.type == finishedBouquet[index].type &&
+                              el.categoryId ==
+                                  finishedBouquet[index].categoryId)
+                          .isBought = finishedBouquet[index].isBought;
+                    });
+                    Navigator.pop(context);
+                  }),
               flowerData: finishedBouquet[index],
               addBasket: () =>
                   updateIsBought(id: finishedBouquet[index].id ?? index),

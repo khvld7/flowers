@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taskflower/components/custom_button.dart';
 import 'package:taskflower/components/custom_textfield.dart';
 import 'package:taskflower/components/input_formatter.dart';
-import 'package:taskflower/database/database.dart';
 
 class ConfirmWidget extends StatefulWidget {
   const ConfirmWidget({super.key});
@@ -113,11 +112,7 @@ class _ConfirmWidgetState extends State<ConfirmWidget> {
                           child: CustomButton(
                               onPressed: () {
                                 setState(() {
-                                  if (checkBox == false) {
-                                    checkBox = true;
-                                  } else {
-                                    checkBox = false;
-                                  }
+                                  checkBox = !checkBox;
                                 });
                               },
                               child: checkBox == false
@@ -160,84 +155,93 @@ class _ConfirmWidgetState extends State<ConfirmWidget> {
           children: [
             Expanded(
               child: CustomButton(
-                color: box.length > 0
-                    ? Color.fromRGBO(137, 106, 219, 1)
-                    : Color.fromRGBO(212, 212, 212, 1),
+                color: commentController.value.text.isEmpty ||
+                        nameController.value.text.isEmpty ||
+                        phoneController.value.text.isEmpty ||
+                        mailController.value.text.isEmpty
+                    ? Color.fromRGBO(212, 212, 212, 1)
+                    : Color.fromRGBO(137, 106, 219, 1),
                 height: 36,
-                onPressed: () => showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                            shape: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(16)),
-                            alignment: Alignment.center,
-                            title: Center(
-                              child: Text(
-                                'Заказ сформирован',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'SF-Pro-Display'),
-                              ),
-                            ),
-                            content: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
-                              child: Text(
-                                'С вами свяжется первый освободившийся оператор',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'SF-Pro-Display'),
-                              ),
-                            ),
-                            actions: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  CustomButton(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
-                                    height: 35,
-                                    textColor: Colors.black,
-                                    border: Border.all(
-                                      color: Color.fromRGBO(137, 106, 219, 1),
-                                    ),
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                    child: Text(
-                                      'Закрыть',
-                                      style: TextStyle(
-                                          fontFamily: 'SF-Pro-Display',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400),
-                                    ),
+                onPressed: commentController.value.text.isEmpty ||
+                        nameController.value.text.isEmpty ||
+                        phoneController.value.text.isEmpty ||
+                        mailController.value.text.isEmpty
+                    ? () {}
+                    : () => showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                                shape: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(16)),
+                                alignment: Alignment.center,
+                                title: Center(
+                                  child: Text(
+                                    'Заказ сформирован',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'SF-Pro-Display'),
                                   ),
-                                  CustomButton(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
-                                    height: 35,
-                                    color: Color.fromRGBO(137, 106, 219, 1),
-                                    onPressed: () {
-                                      Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        '/screens',
-                                        (Route<dynamic> route) => false,
-                                      );
-                                    },
-                                    child: Text(
-                                      'В каталог',
-                                      style: TextStyle(
-                                          fontFamily: 'SF-Pro-Display',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400),
-                                    ),
+                                ),
+                                content: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                  child: Text(
+                                    'С вами свяжется первый освободившийся оператор',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'SF-Pro-Display'),
+                                  ),
+                                ),
+                                actions: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      CustomButton(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        height: 35,
+                                        textColor: Colors.black,
+                                        border: Border.all(
+                                          color:
+                                              Color.fromRGBO(137, 106, 219, 1),
+                                        ),
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                        child: Text(
+                                          'Закрыть',
+                                          style: TextStyle(
+                                              fontFamily: 'SF-Pro-Display',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      ),
+                                      CustomButton(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        height: 35,
+                                        color: Color.fromRGBO(137, 106, 219, 1),
+                                        onPressed: () {
+                                          Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            '/screens',
+                                            (Route<dynamic> route) => false,
+                                          );
+                                        },
+                                        child: Text(
+                                          'В каталог',
+                                          style: TextStyle(
+                                              fontFamily: 'SF-Pro-Display',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      )
+                                    ],
                                   )
-                                ],
-                              )
-                            ])),
+                                ])),
                 child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                     child: Text(

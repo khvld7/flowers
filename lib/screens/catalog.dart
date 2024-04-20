@@ -31,7 +31,6 @@ class CatalogScreenState extends State<CatalogScreen> {
             about: flowersData[id]!.about,
             isBought: !flowersData[id]!.isBought,
             count: flowersData[id]!.count,
-            
           ),
         );
       });
@@ -115,97 +114,31 @@ class CatalogScreenState extends State<CatalogScreen> {
         toolbarHeight: 100,
       ),
       body: flowersData.isNotEmpty
-          ? Column(
+          ? ListView(
+              physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.only(top: 10, bottom: 20),
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 36, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Цветы в горшках',
-                        style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'SF-Pro-Display'),
-                      ),
-                      RawMaterialButton(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed('/flowerall')
-                              .then((value) => setState(() {}));
-                          ;
-                        },
-                        child: Text(
-                          'Смотреть все',
-                          style: TextStyle(
-                              fontSize: 10,
-                              color: Color.fromRGBO(137, 106, 219, 1),
-                              decorationColor: Color.fromRGBO(137, 106, 219, 1),
-                              decoration: TextDecoration.underline),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CardWidget(
-                      flowerData: flowersData[0],
-                      addBasket: () => updateIsBought(id: 0),
-                      onTapCard: () => showCardDialog(
-                          context: context,
-                          flowerData: flowersData[0],
-                          addBasket: () {
-                            setState(() {
-                              flowersData[0]?.isBought = true;
-                              updateIsBought(id: 0);
-                            });
-                            Navigator.pop(context);
-                          }),
-                    ),
-                    CardWidget(
-                      flowerData: flowersData[1],
-                      addBasket: () => updateIsBought(id: 1),
-                      onTapCard: () => showCardDialog(
-                          context: context,
-                          flowerData: flowersData[1],
-                          addBasket: () {
-                            setState(() {
-                              flowersData[1]?.isBought = true;
-                              updateIsBought(id: 1);
-                            });
-                            Navigator.pop(context);
-                          }),
-                    ),
-                  ],
-                ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 36, vertical: 10),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: Text(
-                              'Готовые букеты',
-                              style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'SF-Pro-Display'),
-                            ),
+                          Text(
+                            'Цветы в горшках',
+                            style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'SF-Pro-Display'),
                           ),
                           RawMaterialButton(
                             splashColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onPressed: () {
                               Navigator.of(context)
-                                  .pushNamed('/finishedall')
+                                  .pushNamed('/flowerall')
                                   .then((value) => setState(() {}));
                               ;
                             },
@@ -218,42 +151,116 @@ class CatalogScreenState extends State<CatalogScreen> {
                                       Color.fromRGBO(137, 106, 219, 1),
                                   decoration: TextDecoration.underline),
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CardWidget(
-                      flowerData: flowersData[12],
-                      addBasket: () => updateIsBought(id: 12),
-                      onTapCard: () => showCardDialog(
-                          context: context,
-                          flowerData: flowersData[12],
-                          addBasket: () {
-                            setState(() {
-                              flowersData[12]?.isBought = true;
-                              updateIsBought(id: 12);
-                            });
-                            Navigator.pop(context);
-                          }),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CardWidget(
+                          flowerData: flowersData[0],
+                          addBasket: () => updateIsBought(id: 0),
+                          onTapCard: () => showCardDialog(
+                              context: context,
+                              flowerData: flowersData[0],
+                              addBasket: () {
+                                setState(() {
+                                  flowersData[0]?.isBought ?? true;
+                                  updateIsBought(id: 0);
+                                });
+                                Navigator.pop(context);
+                              }),
+                        ),
+                        CardWidget(
+                          flowerData: flowersData[1],
+                          addBasket: () => updateIsBought(id: 1),
+                          onTapCard: () => showCardDialog(
+                              context: context,
+                              flowerData: flowersData[1],
+                              addBasket: () {
+                                setState(() {
+                                  flowersData[1]?.isBought ?? true;
+                                  updateIsBought(id: 1);
+                                });
+                                Navigator.pop(context);
+                              }),
+                        ),
+                      ],
                     ),
-                    CardWidget(
-                      flowerData: flowersData[13],
-                      addBasket: () => updateIsBought(id: 13),
-                      onTapCard: () => showCardDialog(
-                          context: context,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 36, vertical: 10),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Готовые букеты',
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'SF-Pro-Display'),
+                                ),
+                              ),
+                              RawMaterialButton(
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamed('/finishedall')
+                                      .then((value) => setState(() {}));
+                                  ;
+                                },
+                                child: Text(
+                                  'Смотреть все',
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      color: Color.fromRGBO(137, 106, 219, 1),
+                                      decorationColor:
+                                          Color.fromRGBO(137, 106, 219, 1),
+                                      decoration: TextDecoration.underline),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CardWidget(
+                          flowerData: flowersData[12],
+                          addBasket: () => updateIsBought(id: 12),
+                          onTapCard: () => showCardDialog(
+                              context: context,
+                              flowerData: flowersData[12],
+                              addBasket: () {
+                                setState(() {
+                                  flowersData[12]?.isBought ?? true;
+                                  updateIsBought(id: 12);
+                                });
+                                Navigator.pop(context);
+                              }),
+                        ),
+                        CardWidget(
                           flowerData: flowersData[13],
-                          addBasket: () {
-                            setState(() {
-                              flowersData[13]?.isBought = true;
-                              updateIsBought(id: 13);
-                            });
-                            Navigator.pop(context);
-                          }),
+                          addBasket: () => updateIsBought(id: 13),
+                          onTapCard: () => showCardDialog(
+                              context: context,
+                              flowerData: flowersData[13],
+                              addBasket: () {
+                                setState(() {
+                                  flowersData[13]?.isBought ?? true;
+                                  updateIsBought(id: 13);
+                                });
+                                Navigator.pop(context);
+                              }),
+                        ),
+                      ],
                     ),
                   ],
                 ),

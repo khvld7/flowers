@@ -3,7 +3,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:taskflower/adapter/hive_adapter.dart';
 import 'package:taskflower/components/custom_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:taskflower/database/bouquet.dart';
 import 'package:taskflower/database/database.dart';
 import 'package:taskflower/globals.dart';
 
@@ -15,29 +14,6 @@ class BasketScreen extends StatefulWidget {
 }
 
 class _BasketScreenState extends State<BasketScreen> {
-  void onBasketTab(int index) {
-    box.getAt(index);
-  }
-
-  deleteBought({required Bouquet flowerData}) {
-    setState(() {
-      box.putAt(
-        flowerData.id!,
-        DataBase(
-          id: flowerData.id,
-          type: flowerData.type,
-          categoryId: flowerData.categoryId,
-          image: flowerData.image,
-          name: flowerData.name,
-          price: flowerData.price,
-          about: flowerData.about,
-          isBought: !flowerData.isBought,
-          count: flowerData.count,
-        ),
-      );
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,12 +48,12 @@ class _BasketScreenState extends State<BasketScreen> {
                     padding: EdgeInsets.only(top: 10, bottom: 50),
                     itemCount: box.length,
                     itemBuilder: (BuildContext context, int index) {
-                      // if (box.values.any((el) => el.isBought == true))
-                      if (box.getAt(index)?.isBought == true)
+                      final getBox = box.getAt(index);
+                      if (getBox?.isBought == true)
                         return Dismissible(
                           onDismissed: ((direction) {
                             setState(() {
-                              box.getAt(index)!.isBought = false;
+                              getBox!.isBought = false;
                             });
                           }),
                           resizeDuration: Duration(milliseconds: 300),
@@ -96,12 +72,13 @@ class _BasketScreenState extends State<BasketScreen> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Padding(
-                                      padding: EdgeInsets.only(right: 15),
-                                      child: SvgPicture.asset(
-                                        'assets/icons/trash_icon.svg',
-                                        width: 24,
-                                        height: 24,
-                                      )),
+                                    padding: EdgeInsets.only(right: 15),
+                                    child: SvgPicture.asset(
+                                      'assets/icons/trash_icon.svg',
+                                      width: 24,
+                                      height: 24,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -118,41 +95,37 @@ class _BasketScreenState extends State<BasketScreen> {
                                 ],
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white),
-                            child: CustomButton(
-                              onPressed: () => onBasketTab(index),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 15),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          box.getAt(index)?.name ?? '',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400,
-                                              fontFamily: 'SF-Pro-Display'),
-                                        ),
-                                        Text(
-                                          toMoney(box.getAt(index)?.price ??
-                                                  0) +
-                                              ' руб.',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              fontFamily: 'SF-Pro-Display'),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 15),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        box.getAt(index)?.name ?? '',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: 'SF-Pro-Display'),
+                                      ),
+                                      Text(
+                                        toMoney(box.getAt(index)?.price ?? 0) +
+                                            ' руб.',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'SF-Pro-Display'),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                           ),

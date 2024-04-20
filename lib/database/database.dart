@@ -4,6 +4,7 @@ import 'package:taskflower/client/hive_names.dart';
 import 'package:taskflower/database/bouquet.dart';
 
 var box = Hive.box<DataBase>(HiveBoxes.dataBase);
+var saveBox = Hive.box<SaveDB>(HiveBoxes.saveDataBase);
 final flowers = [
   //Цветы в горшках
   Bouquet(
@@ -164,16 +165,17 @@ void addFlowers() {
   for (var i = 0; i < flowers.length; i++) {
     box.add(
       DataBase(
-        id: flowers[i].id,
-        type: flowers[i].type,
-        categoryId: flowers[i].categoryId,
-        image: flowers[i].image,
-        name: flowers[i].name,
-        price: flowers[i].price,
-        about: flowers[i].about,
-        isBought: flowers[i].isBought,
-        count: flowers[i].count,
-      ),
+          id: flowers[i].id,
+          type: flowers[i].type,
+          categoryId: flowers[i].categoryId,
+          image: flowers[i].image,
+          name: flowers[i].name,
+          price: flowers[i].price,
+          about: flowers[i].about,
+          isSaved: flowers[i].isSaved,
+          isBought: flowers[i].isBought,
+          count: flowers[i].count,
+          total: flowers[i].total),
     );
   }
 }

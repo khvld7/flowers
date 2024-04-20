@@ -11,7 +11,7 @@ import 'package:taskflower/screens/views/constructor.dart';
 import 'package:taskflower/screens/views/finished_bouquet.dart';
 import 'package:taskflower/screens/views/flower_all.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:taskflower/screens/views/saved_bouquet.dart';
 
 int? initScreen;
 void main() async {
@@ -19,6 +19,8 @@ void main() async {
   Hive.registerAdapter(DataBaseAdapter());
   await Hive.openBox<DataBase>(HiveBoxes.dataBase);
   if (box.isEmpty) addFlowers();
+  Hive.registerAdapter(SaveDBAdapter());
+  await Hive.openBox<SaveDB>(HiveBoxes.saveDataBase);
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = await prefs.getInt("initScreen");
@@ -51,6 +53,7 @@ class _MyAppState extends State<MyApp> {
           '/finishedall': (context) => FinishedAll(),
           '/constructor': (context) => Constructor(),
           '/confirm': (context) => ConfirmWidget(),
+          '/saved_bouquet': (context) => SavedBouquet(),
         },
         initialRoute:
             initScreen == 0 || initScreen == null ? '/onboarding' : '/screens');

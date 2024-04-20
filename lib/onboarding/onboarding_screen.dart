@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskflower/globals.dart';
 import '../components/custom_button.dart';
 import 'onboard_widget.dart';
 
@@ -141,37 +142,42 @@ class _OboardingScreenState extends State<OboardingScreen> {
             Padding(
               padding: EdgeInsets.only(top: 20),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 30),
-                  child: Text(
-                    'Условия использования ',
+            RawMaterialButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onPressed: launchURL,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 30),
+                    child: Text(
+                      'Условия использования ',
+                      style: TextStyle(
+                          fontSize: 8,
+                          fontFamily: 'SF-Pro-Display',
+                          color: Color.fromRGBO(161, 167, 176, 1)),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                      horizontal: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(137, 106, 219, 1),
+                    ),
+                    width: 1,
+                    height: 10,
+                  ),
+                  Text(
+                    ' Политика конфиденциальности',
                     style: TextStyle(
                         fontSize: 8,
                         fontFamily: 'SF-Pro-Display',
                         color: Color.fromRGBO(161, 167, 176, 1)),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(137, 106, 219, 1),
-                  ),
-                  width: 1,
-                  height: 10,
-                ),
-                Text(
-                  ' Политика конфиденциальности',
-                  style: TextStyle(
-                      fontSize: 8,
-                      fontFamily: 'SF-Pro-Display',
-                      color: Color.fromRGBO(161, 167, 176, 1)),
-                ),
-              ],
+                ],
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(top: 20),

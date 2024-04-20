@@ -1,6 +1,6 @@
 {
-    "name": "abdulla",
-    "short_name": "abdulla",
+    "name": "taskflower",
+    "short_name": "taskflower",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

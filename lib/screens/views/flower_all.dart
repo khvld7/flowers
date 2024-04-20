@@ -6,7 +6,6 @@ import 'package:taskflower/database/bouquet.dart';
 import 'package:taskflower/database/database.dart';
 import 'package:taskflower/globals.dart';
 
-
 class FlowerAll extends StatefulWidget {
   const FlowerAll({super.key});
 
@@ -97,6 +96,8 @@ class _FlowerAllState extends State<FlowerAll> {
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: GridView.builder(
+          physics: BouncingScrollPhysics(),
+          padding: EdgeInsets.only(top: 10, bottom: 20),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisSpacing: 30,

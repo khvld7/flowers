@@ -21,16 +21,29 @@ class DataBase extends HiveObject {
   int? count;
   @HiveField(8)
   int? id;
+  @HiveField(9)
+  int? total;
+  @HiveField(10)
+  bool isSaved;
 
   DataBase({
     this.id = 0,
     this.about = '',
     this.isBought = false,
+    this.isSaved = false,
     this.count = 0,
     this.type = 0,
     this.categoryId = 0,
     this.image = '',
     this.name = '',
     this.price = 0,
+    this.total = 0,
   });
+}
+
+@HiveType(typeId: 1)
+class SaveDB extends HiveObject {
+  @HiveField(0)
+  DataBase saveDB;
+  SaveDB({required this.saveDB});
 }

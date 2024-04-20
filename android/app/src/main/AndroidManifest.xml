@@ -3,7 +3,7 @@
     <application
         android:label="taskflower"
         android:name="${applicationName}"
-        android:icon="@mipmap/splash">
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:exported="true"

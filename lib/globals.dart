@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:taskflower/components/card_dialog.dart';
 import 'package:taskflower/components/custom_button.dart';
 import 'package:taskflower/database/bouquet.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 toMoney(int value) {
   String result = value.toString().replaceAllMapped(
@@ -13,9 +14,8 @@ toMoney(int value) {
 
 showCardDialog(
     {required BuildContext context,
-    required Bouquet? flowerData,
+    Bouquet? flowerData,
     required Function() addBasket}) {
-  print(1);
   showDialog(
     context: context,
     builder: (_) => AlertDialog(
@@ -64,4 +64,11 @@ showCardDialog(
       ),
     ),
   );
+}
+
+launchURL() async {
+  final Uri url = Uri.parse('https://flutter.dev');
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch $url');
+  }
 }

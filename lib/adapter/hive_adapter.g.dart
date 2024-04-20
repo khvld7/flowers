@@ -20,19 +20,21 @@ class DataBaseAdapter extends TypeAdapter<DataBase> {
       id: fields[8] as int?,
       about: fields[5] as String?,
       isBought: fields[6] as bool,
+      isSaved: fields[10] as bool,
       count: fields[7] as int?,
       type: fields[1] as int?,
       categoryId: fields[0] as int?,
       image: fields[2] as String?,
       name: fields[3] as String?,
       price: fields[4] as int?,
+      total: fields[9] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, DataBase obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.categoryId)
       ..writeByte(1)
@@ -50,7 +52,11 @@ class DataBaseAdapter extends TypeAdapter<DataBase> {
       ..writeByte(7)
       ..write(obj.count)
       ..writeByte(8)
-      ..write(obj.id);
+      ..write(obj.id)
+      ..writeByte(9)
+      ..write(obj.total)
+      ..writeByte(10)
+      ..write(obj.isSaved);
   }
 
   @override
@@ -60,6 +66,40 @@ class DataBaseAdapter extends TypeAdapter<DataBase> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is DataBaseAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class SaveDBAdapter extends TypeAdapter<SaveDB> {
+  @override
+  final int typeId = 1;
+
+  @override
+  SaveDB read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return SaveDB(
+      saveDB: fields[0] as DataBase,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, SaveDB obj) {
+    writer
+      ..writeByte(1)
+      ..writeByte(0)
+      ..write(obj.saveDB);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SaveDBAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
