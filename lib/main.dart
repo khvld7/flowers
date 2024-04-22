@@ -21,6 +21,8 @@ void main() async {
   if (box.isEmpty) addFlowers();
   Hive.registerAdapter(SaveDBAdapter());
   await Hive.openBox<SaveDB>(HiveBoxes.saveDataBase);
+  Hive.registerAdapter(HistoryDBAdapter());
+  await Hive.openBox<HistoryDB>(HiveBoxes.historyDataBase);
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = await prefs.getInt("initScreen");

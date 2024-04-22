@@ -1,7 +1,12 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:taskflower/adapter/hive_adapter.dart';
 import 'package:taskflower/components/card_dialog.dart';
 import 'package:taskflower/components/custom_button.dart';
 import 'package:taskflower/database/bouquet.dart';
+import 'package:taskflower/database/database.dart';
+import 'package:taskflower/screens/views/confirm.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 toMoney(int value) {
@@ -71,4 +76,26 @@ launchURL() async {
   if (!await launchUrl(url)) {
     throw Exception('Could not launch $url');
   }
+}
+
+updateDB() {
+  final index = historyBox.values.length - 1;
+  final histGetVal = historyBox.getAt(index);
+
+  historyBox.values.forEach(
+    (element) {
+      if (historyBox.values.length > index)
+        historyBox.putAt(
+          index,
+          HistoryDB(
+            name: nameController.text,
+            phone: phoneController.text,
+            mail: mailController.text,
+            comment: commentController.text,
+            total: histGetVal!.total,
+            bouquetName: histGetVal.bouquetName,
+          ),
+        );
+    },
+  );
 }

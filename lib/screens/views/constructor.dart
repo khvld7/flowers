@@ -19,6 +19,7 @@ int packetPrice = 300;
 bool checkPacket = false;
 
 class _ConstructorState extends State<Constructor> {
+  List<Bouquet> history = [];
   List<Bouquet> save = [];
   Map<int, Bouquet> flowersData = {};
   addSave({required int index}) {
@@ -47,7 +48,6 @@ class _ConstructorState extends State<Constructor> {
     String name = '';
     int price = 0;
     int count = 0;
-    int id = 0;
     int total = 0;
 
     setState(() {
@@ -73,6 +73,57 @@ class _ConstructorState extends State<Constructor> {
           ),
         ),
       );
+    });
+  }
+
+  addHistoryDB({required int index}) {
+    setState(() {
+      if (flowersData[index]!.count != 0) {
+        history.add(Bouquet(
+          id: flowersData[index]!.id,
+          type: flowersData[index]!.type,
+          categoryId: flowersData[index]!.categoryId,
+          image: flowersData[index]!.image,
+          name: flowersData[index]!.name,
+          isBought: flowersData[index]!.isBought,
+          isSaved: flowersData[index]!.isSaved,
+          about: flowersData[index]!.about,
+          price: flowersData[index]!.price,
+          count: flowersData[index]!.count,
+          total: flowersData[index]!.total,
+        ));
+      }
+    });
+  }
+
+  joinHistory() {
+    String name = '';
+    int price = 0;
+    int count = 0;
+    int total = 0;
+
+    setState(() {
+      checkPacket ? total += packetPrice : total;
+      history.forEach(
+        (element) {
+          name += '${element.name} ';
+          if (element.count! > 1) {
+            final bouquetTotal = element.price! * element.count!;
+            price += bouquetTotal;
+          } else {
+            price += element.price!;
+          }
+        },
+      );
+
+      price += total;
+      historyBox.add(
+        HistoryDB(
+          total: price,
+          bouquetName: name,
+        ),
+      );
+      updateDB();
     });
   }
 
@@ -228,7 +279,7 @@ class _ConstructorState extends State<Constructor> {
                         splashColor: Colors.transparent,
                         onPressed: () {
                           setState(() {
-                            checkPacket = !checkPacket;
+                            total != 0 ? checkPacket = !checkPacket : 0;
                           });
                         },
                         child: checkPacket == false
@@ -294,7 +345,22 @@ class _ConstructorState extends State<Constructor> {
                     child: CustomButton(
                       onPressed: () {
                         total != 0
-                            ? Navigator.pushNamed(context, '/confirm')
+                            ? {
+                                setState(
+                                  () {
+                                    history.clear();
+                                    flowersData.values.forEach(
+                                      (element) {
+                                        if (element.count != 0) {
+                                          addHistoryDB(index: element.id!);
+                                        }
+                                      },
+                                    );
+                                    joinHistory();
+                                  },
+                                ),
+                                Navigator.pushNamed(context, '/confirm'),
+                              }
                             : () {};
                       },
                       child: Text('Перейти к оформлению'),

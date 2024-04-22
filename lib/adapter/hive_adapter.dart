@@ -47,3 +47,27 @@ class SaveDB extends HiveObject {
   DataBase saveDB;
   SaveDB({required this.saveDB});
 }
+
+@HiveType(typeId: 2)
+class HistoryDB extends HiveObject {
+  @HiveField(0)
+  String? name;
+  @HiveField(1)
+  String? phone;
+  @HiveField(2)
+  String? mail;
+  @HiveField(3)
+  String? comment;
+  @HiveField(4)
+  int? total;
+  @HiveField(5)
+  String? bouquetName;
+
+  HistoryDB(
+      {this.name,
+      this.phone,
+      this.mail,
+      this.comment,
+      this.total,
+      this.bouquetName});
+}

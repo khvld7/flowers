@@ -5,6 +5,7 @@ import 'package:taskflower/database/bouquet.dart';
 
 var box = Hive.box<DataBase>(HiveBoxes.dataBase);
 var saveBox = Hive.box<SaveDB>(HiveBoxes.saveDataBase);
+var historyBox = Hive.box<HistoryDB>(HiveBoxes.historyDataBase);
 final flowers = [
   //Цветы в горшках
   Bouquet(

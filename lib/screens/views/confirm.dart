@@ -3,22 +3,22 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taskflower/components/custom_button.dart';
 import 'package:taskflower/components/custom_textfield.dart';
 import 'package:taskflower/components/input_formatter.dart';
+import 'package:taskflower/globals.dart';
 
 class ConfirmWidget extends StatefulWidget {
-  const ConfirmWidget({super.key});
+  ConfirmWidget({super.key});
 
   @override
   State<ConfirmWidget> createState() => _ConfirmWidgetState();
 }
 
+TextEditingController nameController = TextEditingController();
+TextEditingController phoneController = TextEditingController();
+TextEditingController mailController = TextEditingController();
+TextEditingController commentController = TextEditingController();
+
 class _ConfirmWidgetState extends State<ConfirmWidget> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController mailController = TextEditingController();
-  TextEditingController commentController = TextEditingController();
-
   bool checkBox = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,6 +77,7 @@ class _ConfirmWidgetState extends State<ConfirmWidget> {
                       keyboardType: TextInputType.text,
                       controller: nameController,
                       textInputAction: TextInputAction.next,
+                      textCapitalization: TextCapitalization.sentences,
                     ),
                     CustomTextfield(
                       prefixIcon:
@@ -101,6 +102,7 @@ class _ConfirmWidgetState extends State<ConfirmWidget> {
                         value = mailController.value.text;
                       },
                       hintText: '******@mail.com',
+                      textCapitalization: TextCapitalization.none,
                       keyboardType: TextInputType.emailAddress,
                       controller: mailController,
                       textInputAction: TextInputAction.done,
@@ -171,81 +173,86 @@ class _ConfirmWidgetState extends State<ConfirmWidget> {
                         phoneController.value.text.isEmpty ||
                         mailController.value.text.isEmpty
                     ? () {}
-                    : () => showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                                shape: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(16)),
-                                alignment: Alignment.center,
-                                title: Center(
-                                  child: Text(
-                                    'Заказ сформирован',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily: 'SF-Pro-Display'),
+                    : () {
+                        showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            shape: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(16)),
+                            alignment: Alignment.center,
+                            title: Center(
+                              child: Text(
+                                'Заказ сформирован',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'SF-Pro-Display'),
+                              ),
+                            ),
+                            content: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              child: Text(
+                                'С вами свяжется первый освободившийся оператор',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'SF-Pro-Display'),
+                              ),
+                            ),
+                            actions: [
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  CustomButton(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 20),
+                                    height: 35,
+                                    textColor: Colors.black,
+                                    border: Border.all(
+                                      color: Color.fromRGBO(137, 106, 219, 1),
+                                    ),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                    child: Text(
+                                      'Закрыть',
+                                      style: TextStyle(
+                                          fontFamily: 'SF-Pro-Display',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                    ),
                                   ),
-                                ),
-                                content: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  child: Text(
-                                    'С вами свяжется первый освободившийся оператор',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: 'SF-Pro-Display'),
-                                  ),
-                                ),
-                                actions: [
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      CustomButton(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20),
-                                        height: 35,
-                                        textColor: Colors.black,
-                                        border: Border.all(
-                                          color:
-                                              Color.fromRGBO(137, 106, 219, 1),
-                                        ),
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(),
-                                        child: Text(
-                                          'Закрыть',
-                                          style: TextStyle(
-                                              fontFamily: 'SF-Pro-Display',
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                      ),
-                                      CustomButton(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20),
-                                        height: 35,
-                                        color: Color.fromRGBO(137, 106, 219, 1),
-                                        onPressed: () {
-                                          Navigator.pushNamedAndRemoveUntil(
-                                            context,
-                                            '/screens',
-                                            (Route<dynamic> route) => false,
-                                          );
-                                        },
-                                        child: Text(
-                                          'В каталог',
-                                          style: TextStyle(
-                                              fontFamily: 'SF-Pro-Display',
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                      )
-                                    ],
+                                  CustomButton(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 20),
+                                    height: 35,
+                                    color: Color.fromRGBO(137, 106, 219, 1),
+                                    onPressed: () =>
+                                        Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      '/screens',
+                                      (Route<dynamic> route) => false,
+                                    ),
+                                    child: Text(
+                                      'В каталог',
+                                      style: TextStyle(
+                                          fontFamily: 'SF-Pro-Display',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                    ),
                                   )
-                                ])),
+                                ],
+                              )
+                            ],
+                          ),
+                        );
+                        setState(() {
+                          updateDB();
+                        });
+                      },
                 child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                     child: Text(

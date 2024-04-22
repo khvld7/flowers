@@ -171,8 +171,23 @@ class _BasketScreenState extends State<BasketScreen> {
                     : Color.fromRGBO(212, 212, 212, 1),
                 height: 36,
                 onPressed: () {
-                  if (box.values.any((el) => el.isBought == true))
-                    Navigator.pushNamed(context, '/confirm');
+                  setState(() {
+                    if (box.values.any((el) => el.isBought == true))
+                      box.values.forEach(
+                        (element) {
+                          if (element.isBought == true) {
+                            historyBox.add(
+                              HistoryDB(
+                                total: element.price,
+                                bouquetName: element.name,
+                              ),
+                            );
+                            updateDB();
+                          }
+                        },
+                      );
+                  });
+                  Navigator.pushNamed(context, '/confirm');
                 },
                 child: Text(
                   'Оформить',

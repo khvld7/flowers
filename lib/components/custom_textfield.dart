@@ -7,6 +7,7 @@ class CustomTextfield extends StatefulWidget {
   final TextInputType? keyboardType;
   final TextEditingController? controller;
   Function(String)? onChanged;
+  TextCapitalization textCapitalization;
 
   final String name;
   List<TextInputFormatter>? inputFormatters;
@@ -20,6 +21,7 @@ class CustomTextfield extends StatefulWidget {
     this.inputFormatters,
     this.hintText,
     this.textInputAction,
+    this.textCapitalization = TextCapitalization.none,
     required this.onChanged,
     required this.name,
   });
@@ -63,7 +65,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
             minLines: null,
             maxLines: 1,
             autocorrect: false,
-            textCapitalization: TextCapitalization.sentences,
+            textCapitalization: widget.textCapitalization,
             textInputAction: widget.textInputAction,
             keyboardType: widget.keyboardType,
             controller: widget.controller,

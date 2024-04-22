@@ -115,7 +115,7 @@ class _SavedBouquetState extends State<SavedBouquet> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          saveBox.getAt(index)!.saveDB.name!,
+                                          saveGet.saveDB.name!,
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 20,
@@ -298,6 +298,19 @@ class _SavedBouquetState extends State<SavedBouquet> {
                 color: Color.fromRGBO(137, 106, 219, 1),
                 height: 36,
                 onPressed: () {
+                  saveBox.values.forEach(
+                    (element) {
+                      if (element.saveDB.isSaved == true) {
+                        historyBox.add(
+                          HistoryDB(
+                            total: element.saveDB.total,
+                            bouquetName: element.saveDB.name,
+                          ),
+                        );
+                        updateDB();
+                      }
+                    },
+                  );
                   Navigator.pushNamed(context, '/confirm');
                 },
                 child: Text(
